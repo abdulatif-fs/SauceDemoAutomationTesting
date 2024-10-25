@@ -1,7 +1,7 @@
 # Automation Testing Website SauceDemo
 
 Mini Project dalam proses pelatihan Software Quality Assurance bersama ProSigmaka.
-Menggunakan WebdrioverIO, project ini diselesaikan dengan tengat waktu satu minggu.
+Menggunakan WebdrioverIO, project ini diselesaikan dengan tenggat waktu satu minggu.
 
 
 Dokumen Test Case dapat dilihat pada link berikut: 
