@@ -1,6 +1,7 @@
 import { expect, browser, $$, $ } from '@wdio/globals'
 import Inventory from '../pageObject/inventory.page.js'
 import LoginPage from '../pageObject/login.page.js'
+import AddToCart from '../pageObject/addtocart.page.js'
 import { isDesending, isAscending } from '../../helpers/checksorting.js'
 
 describe('Filter SauceDemo Web Inventory product', () => {
@@ -60,6 +61,59 @@ describe('Filter SauceDemo Web Inventory product', () => {
         
         // asertion
         await expect(isProductSortedDescending).toBe(true)
+    })
 
+    it('show burger menu list menu', async () => {
+        await expect(Inventory.closeMenu).not.toBeDisplayed()
+        await Inventory.clickBurgerMenu()
+        await expect(Inventory.closeMenu).toBeDisplayed()
+    })
+
+
+    it('click menu all list item', async () => {
+        // await expect(Inventory.closeMenu).not.toBeDisplayed()
+        // await Inventory.clickBurgerMenu()
+        await expect(Inventory.closeMenu).toBeDisplayed()
+
+        await Inventory.clickAllListItem()
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html')
+    })
+
+    it('click menu reset', async () => {
+        await AddToCart.clickAddSaucelabsBackpack()
+        await expect(AddToCart.shoppingCartBadge).toExist()
+
+        // await expect(Inventory.closeMenu).not.toBeDisplayed()
+        // await Inventory.clickBurgerMenu()
+        await expect(Inventory.closeMenu).toBeDisplayed()
+
+        await Inventory.clickResetMenu()
+        await expect(AddToCart.shoppingCartBadge).not.toExist()
+        await expect(AddToCart.removeBackpack).not.toExist()
+    })
+
+    it('click menu About', async () => {
+        // await expect(Inventory.closeMenu).not.toBeDisplayed()
+        // await Inventory.clickBurgerMenu()
+        await expect(Inventory.closeMenu).toBeDisplayed()
+
+        await Inventory.clickAboutMenu()
+        await expect(browser).toHaveUrl('https://saucelabs.com/')
+    })
+
+    it('click menu Logout', async () => {
+        await LoginPage.OpenLogin()
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/')
+
+        await LoginPage.SetUsername('standard_user')
+        await LoginPage.SetPassword('secret_sauce')
+        await LoginPage.ClickLogin()
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html')
+        await expect(Inventory.closeMenu).not.toBeDisplayed()
+        await Inventory.clickBurgerMenu()
+        await expect(Inventory.closeMenu).toBeDisplayed()
+
+        await Inventory.clickLogoutMenu()
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/')
     })
 })

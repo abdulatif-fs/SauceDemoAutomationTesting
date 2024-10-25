@@ -10,7 +10,34 @@ class Inventory{
     get allProductName() {return $$('div[data-test="inventory-item-name"]')}
     get allProductPrice() {return $$('div[data-test="inventory-item-price"]')}
 
+    get burgerMenuItem() {return $('#react-burger-menu-btn')}
+    get allItemMenu() {return $('a[data-test="inventory-sidebar-link"]')}
+    get aboutMenu() {return $('a[data-test="about-sidebar-link"]')}
+    get logoutMenu() {return $('a[data-test="logout-sidebar-link"]')}
+    get resetMenu() {return $('a[data-test="reset-sidebar-link"]')}
+    get closeMenu() {return $('#react-burger-cross-btn')}
+
     // action selector
+    async clickBurgerMenu() {
+        await this.burgerMenuItem.click()
+    }
+
+    async clickAllListItem(){
+        await this.allItemMenu.click()
+    }
+
+    async clickAboutMenu() {
+        await this.aboutMenu.click()
+    }
+
+    async clickLogoutMenu() {
+        await this.logoutMenu.click()
+    }
+
+    async clickResetMenu(){
+        await this.resetMenu.click()
+    }
+
     async clickFilterDescending(){
         await this.filterField.click()
         await this.optionfilterDescending.click()
