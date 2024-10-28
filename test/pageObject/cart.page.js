@@ -7,8 +7,10 @@ class Cart{
     get titlecart() {return $('[data-test="title"]')}
     get removeOnesie() {return $('#remove-sauce-labs-onesie')}
     get allListItemName() {return $$('[data-test="inventory-item-name"]')}
+    get ListItem() {return $('[data-test="inventory-item"]')}
 
     get checkoutItemmenu() {return $('#checkout')}
+    get continueShopping() {return $('#continue-shopping')}
 
 
     // action selector
@@ -22,6 +24,10 @@ class Cart{
 
     async clickCheckout(){
         await this.checkoutItemmenu.click()
+    }
+
+    async clickContinueShopping(){
+        await this.continueShopping.click()
     }
     
     async getAllItemName() {

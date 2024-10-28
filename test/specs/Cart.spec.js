@@ -2,7 +2,7 @@ import { expect, browser, $$, $ } from '@wdio/globals'
 import LoginPage from '../pageObject/login.page.js'
 import AddToCart from '../pageObject/addtocart.page.js'
 import Cart from '../pageObject/cart.page.js'
-import { isProductExist } from '../../helpers/checklistitem.js'
+import { isProductExist, isEmpty } from '../../helpers/checklistitem.js'
 
 describe('Cart in SauceDemo', async () => {
     beforeEach('login to sauceDemo and acces Inventory.html', async () => {
@@ -17,17 +17,19 @@ describe('Cart in SauceDemo', async () => {
 
     it('chect 1 product in cart', async () => {
         await AddToCart.clickAddSaucelabsOnesie()
-        expect(AddToCart.shoppingCartBadge).toHaveText(1)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("1")
 
         await Cart.clickcartmenu()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
-        expect(Cart.titlecart).toHaveText('Yout Cart')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
 
         const allItemName = await Cart.getAllItemName()
-        expect(allItemName).toHaveValue('Sauce Labs Onesie')
-        // const productExist = isProductExist('Sauce Labs Onesie', allItemName)
-        // expect(productExist).toBe(true)
+        // await expect(allItemName).toHaveValue('Sauce Labs Onesie')
+        const emptyList = isEmpty(allItemName)
+        const productExist = isProductExist('Sauce Labs Onesie', allItemName)
+        await expect(emptyList).toBe(false)
+        await expect(productExist).toBe(true)
     })
 
     it('Remove product from cart', async () => {
@@ -36,29 +38,43 @@ describe('Cart in SauceDemo', async () => {
 
         await Cart.clickcartmenu()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
-        expect(Cart.titlecart).toHaveText('Yout Cart')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
 
         await Cart.clickRemoveOnesie()
 
         const allItemName = await Cart.getAllItemName()
-        expect(allItemName).not.toHaveValue()
+        const emptyList = isEmpty(allItemName)
+        await expect(emptyList).toBe(true)
+    })
+
+    it('Check continue shopping menu', async () => {
+        await Cart.clickcartmenu()
+
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
+
+        await Cart.clickContinueShopping()
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html')
     })
 
     it('Add product Onesie and checkout', async () => {
         await AddToCart.clickAddSaucelabsOnesie()
-        expect(AddToCart.shoppingCartBadge).toHaveText(1)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("1")
 
         await Cart.clickcartmenu()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
-        expect(Cart.titlecart).toHaveText('Yout Cart')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
 
         const allItemName = await Cart.getAllItemName()
-        expect(allItemName).toHaveValue('Sauce Labs Onesie')
+        const emptyList = isEmpty(allItemName)
+        const productExist = isProductExist('Sauce Labs Onesie', allItemName)
+        await expect(emptyList).toBe(false)
+        await expect(productExist).toBe(true)
 
         await Cart.clickCheckout()
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
 
     })
 })

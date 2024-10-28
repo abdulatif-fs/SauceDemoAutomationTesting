@@ -4,6 +4,7 @@ import AddToCart from '../pageObject/addtocart.page.js'
 import Cart from '../pageObject/cart.page.js'
 import Checkout from '../pageObject/checkout.page.js'
 import OverviewCo from '../pageObject/checkoutoeverview.page.js'
+import { isProductExist, isEmpty } from '../../helpers/checklistitem.js'
 
 describe('Checkout in SauceDemo', async () => {
     beforeEach('login to sauceDemo and add onesie to cart', async () => {
@@ -18,40 +19,58 @@ describe('Checkout in SauceDemo', async () => {
         
     })
 
+    it.skip('checkout with no product selected', async () => {
+        await Cart.clickcartmenu()
+
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
+
+        // const allItemName = await Cart.getAllItemName()
+        await expect(Cart.ListItem).not.toBePresent()
+
+        await expect(Cart.checkoutItemmenu).not.toBeClickable()
+    })
+
     it('click cancel checkout', async () => {
         await AddToCart.clickAddSaucelabsOnesie()
-        expect(AddToCart.shoppingCartBadge).toHaveText(1)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("1")
 
         await Cart.clickcartmenu()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
-        expect(Cart.titlecart).toHaveText('Yout Cart')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
 
         const allItemName = await Cart.getAllItemName()
-        expect(allItemName).toHaveValue('Sauce Labs Onesie')
+        const emptyList = isEmpty(allItemName)
+        const productExist = isProductExist('Sauce Labs Onesie', allItemName)
+        await expect(emptyList).toBe(false)
+        await expect(productExist).toBe(true)
 
         await Cart.clickCheckout()
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
 
         await Checkout.clickCancel()
-        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
-        expect(AddToCart.shoppingCartBadge).toHaveText(1)
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(AddToCart.shoppingCartBadge).toHaveText("1")
     })
 
     it('no fill all field', async () => {
         // await AddToCart.clickAddSaucelabsOnesie()
-        expect(AddToCart.shoppingCartBadge).toHaveText(1)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("1")
 
         await Cart.clickcartmenu()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
-        expect(Cart.titlecart).toHaveText('Yout Cart')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
 
         const allItemName = await Cart.getAllItemName()
-        expect(allItemName).toHaveValue('Sauce Labs Onesie')
+        const emptyList = isEmpty(allItemName)
+        const productExist = isProductExist('Sauce Labs Onesie', allItemName)
+        await expect(emptyList).toBe(false)
+        await expect(productExist).toBe(true)
 
         await Cart.clickCheckout()
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
         await Checkout.fillDataInformation('', '', '')
         await Checkout.clickContinueItem()
 
@@ -62,18 +81,21 @@ describe('Checkout in SauceDemo', async () => {
 
     it('no fill firstname', async () => {
         // await AddToCart.clickAddSaucelabsOnesie()
-        expect(AddToCart.shoppingCartBadge).toHaveText(1)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("1")
 
         await Cart.clickcartmenu()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
-        expect(Cart.titlecart).toHaveText('Yout Cart')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
 
         const allItemName = await Cart.getAllItemName()
-        expect(allItemName).toHaveValue('Sauce Labs Onesie')
+        const emptyList = isEmpty(allItemName)
+        const productExist = isProductExist('Sauce Labs Onesie', allItemName)
+        await expect(emptyList).toBe(false)
+        await expect(productExist).toBe(true)
 
         await Cart.clickCheckout()
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
         await Checkout.fillDataInformation('', 'fajar', '12345')
         await Checkout.clickContinueItem()
 
@@ -84,18 +106,21 @@ describe('Checkout in SauceDemo', async () => {
 
     it('no fill lasttname', async () => {
         // await AddToCart.clickAddSaucelabsOnesie()
-        expect(AddToCart.shoppingCartBadge).toHaveText(1)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("1")
 
         await Cart.clickcartmenu()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
-        expect(Cart.titlecart).toHaveText('Yout Cart')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
 
         const allItemName = await Cart.getAllItemName()
-        expect(allItemName).toHaveValue('Sauce Labs Onesie')
+        const emptyList = isEmpty(allItemName)
+        const productExist = isProductExist('Sauce Labs Onesie', allItemName)
+        await expect(emptyList).toBe(false)
+        await expect(productExist).toBe(true)
 
         await Cart.clickCheckout()
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
         await Checkout.fillDataInformation('abdulatif', '', '12345')
         await Checkout.clickContinueItem()
 
@@ -106,18 +131,21 @@ describe('Checkout in SauceDemo', async () => {
 
     it('no fill postal code', async () => {
         // await AddToCart.clickAddSaucelabsOnesie()
-        expect(AddToCart.shoppingCartBadge).toHaveText(1)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("1")
 
         await Cart.clickcartmenu()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
-        expect(Cart.titlecart).toHaveText('Yout Cart')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
 
         const allItemName = await Cart.getAllItemName()
-        expect(allItemName).toHaveValue('Sauce Labs Onesie')
+        const emptyList = isEmpty(allItemName)
+        const productExist = isProductExist('Sauce Labs Onesie', allItemName)
+        await expect(emptyList).toBe(false)
+        await expect(productExist).toBe(true)
 
         await Cart.clickCheckout()
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
         await Checkout.fillDataInformation('abdulatif', 'fajar', '')
         await Checkout.clickContinueItem()
 
@@ -128,65 +156,74 @@ describe('Checkout in SauceDemo', async () => {
 
     it('fill all data and continue', async () => {
         // await AddToCart.clickAddSaucelabsOnesie()
-        expect(AddToCart.shoppingCartBadge).toHaveText(1)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("1")
 
         await Cart.clickcartmenu()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
-        expect(Cart.titlecart).toHaveText('Yout Cart')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
 
         const allItemName = await Cart.getAllItemName()
-        expect(allItemName).toHaveValue('Sauce Labs Onesie')
+        const emptyList = isEmpty(allItemName)
+        const productExist = isProductExist('Sauce Labs Onesie', allItemName)
+        await expect(emptyList).toBe(false)
+        await expect(productExist).toBe(true)
 
         await Cart.clickCheckout()
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
         await Checkout.fillDataInformation('abdulatif', 'fajar', '12345')
         await Checkout.clickContinueItem()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-two.html')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-two.html')
     })
 
     it('cancel checkout overview', async () => {
         await Cart.clickcartmenu()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
-        expect(Cart.titlecart).toHaveText('Yout Cart')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
 
         const allItemName = await Cart.getAllItemName()
-        expect(allItemName).toHaveValue('Sauce Labs Onesie')
+        const emptyList = isEmpty(allItemName)
+        const productExist = isProductExist('Sauce Labs Onesie', allItemName)
+        await expect(emptyList).toBe(false)
+        await expect(productExist).toBe(true)
 
         await Cart.clickCheckout()
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
         await Checkout.fillDataInformation('abdulatif', 'fajar', '12345')
         await Checkout.clickContinueItem()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-two.html')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-two.html')
 
         await OverviewCo.clickCancel()
-        expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html')
-        expect(AddToCart.shoppingCartBadge).toHaveText(1)
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html')
+        await expect(AddToCart.shoppingCartBadge).toHaveText("1")
 
     })
 
     it('finish checkout overview', async () => {
         await Cart.clickcartmenu()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
-        expect(Cart.titlecart).toHaveText('Yout Cart')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html')
+        await expect(Cart.titlecart).toHaveText('Your Cart')
 
         const allItemName = await Cart.getAllItemName()
-        expect(allItemName).toHaveValue('Sauce Labs Onesie')
+        const emptyList = isEmpty(allItemName)
+        const productExist = isProductExist('Sauce Labs Onesie', allItemName)
+        await expect(emptyList).toBe(false)
+        await expect(productExist).toBe(true)
 
         await Cart.clickCheckout()
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html')
         await Checkout.fillDataInformation('abdulatif', 'fajar', '12345')
         await Checkout.clickContinueItem()
 
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-two.html')
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-two.html')
 
         await OverviewCo.clickFinis()
-        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-complete.html')
-        expect(AddToCart.shoppingCartBadge).not.toExist()
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-complete.html')
+        await expect(AddToCart.shoppingCartBadge).not.toExist()
     })
 
 })

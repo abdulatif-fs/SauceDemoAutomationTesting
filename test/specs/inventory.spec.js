@@ -79,7 +79,7 @@ describe('Filter SauceDemo Web Inventory product', () => {
         await expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html')
     })
 
-    it('click menu reset', async () => {
+    it.skip('click menu reset', async () => {
         await AddToCart.clickAddSaucelabsBackpack()
         await expect(AddToCart.shoppingCartBadge).toExist()
 

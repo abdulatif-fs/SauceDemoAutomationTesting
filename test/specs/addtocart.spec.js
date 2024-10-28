@@ -17,7 +17,7 @@ describe('Cart in SauceDemo', async () => {
         await AddToCart.clickAddSaucelabsOnesie()
 
         // const productInCart = await Cart.countCart()
-        expect(AddToCart.shoppingCartBadge).toHaveText(1)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("1")
 
     })
 
@@ -25,7 +25,7 @@ describe('Cart in SauceDemo', async () => {
         // await Cart.clickAddSaucelabsOnesie()
         await AddToCart.clickAddSaucelabsBikeLight()
 
-        expect(AddToCart.shoppingCartBadge).toHaveText(2)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("2")
     })
 
     it('add product to cart 3 product', async () => {
@@ -33,7 +33,7 @@ describe('Cart in SauceDemo', async () => {
         // await Cart.clickAddSaucelabsBikeLight()
         await AddToCart.clickAddSaucelabsBoldTshirt()
 
-        expect(AddToCart.shoppingCartBadge).toHaveText(3)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("3")
     })
 
     it('add product to cart 6 product', async () => {
@@ -44,14 +44,14 @@ describe('Cart in SauceDemo', async () => {
         await AddToCart.clickAddSaucelabsTshirtRed()
         await AddToCart.clickAddSaucelabsFleeceJacket()
 
-        expect(AddToCart.shoppingCartBadge).toHaveText(6)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("6")
     })
 
     it('Remove product Fleece Jacket', async () => {
         // await AddToCart.clickAddSaucelabsFleeceJacket()
         await AddToCart.clickRemoveFleeceJacket()
 
-        expect(AddToCart.shoppingCartBadge).toHaveText(5)
+        await expect(AddToCart.shoppingCartBadge).toHaveText("5")
     })
 
     it('Remove all product in cart', async () => {
@@ -67,6 +67,6 @@ describe('Cart in SauceDemo', async () => {
         await AddToCart.clickRemoveAllProduct()
         // await AddToCart.clickRemoveFleeceJacket()
 
-        expect(AddToCart.shoppingCartBadge).not.toExist()
+        await expect(AddToCart.shoppingCartBadge).not.toExist()
     })
 })
